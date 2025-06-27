@@ -10,11 +10,11 @@ A lightweight, zero-dependency library for making plain HTML reactive with minim
 - View Transition API support for smooth animations
 
 ## Demo
-Open `reactivehtml.html` in your browser to see a live demo. Try adding todos, toggling visibility, and editing variables to see reactivity in action.
+Open `reactiveHtml.html` in your browser to see a live demo. Try adding todos, toggling visibility, and editing variables to see reactivity in action.
 
 ## Usage
 1. Clone the repo or copy the `reactiveHtml` folder.
-2. Open `reactivehtml.html` in your browser.
+2. Open `reactiveHtml.html` in your browser.
 3. Edit the HTML or JS to fit your needs.
 
 ## Example
