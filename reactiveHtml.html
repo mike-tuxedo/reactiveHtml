@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reactive html with vanillajs</title>
+    <link rel='stylesheet' href='/pico-main/css/pico.cyan.min.css'>
+
+    <script src="reactiveHtml.js"></script>
+
+    <style>
+        html {
+            background: linear-gradient(14deg, #01aaff, #025d5d, #043737);
+            background-size: 180% 180%;
+            animation: gradient-animation 15s ease infinite;
+        }
+
+        @keyframes gradient-animation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        hr {
+            margin: 60px 0;
+        }
+
+        .debug {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            border: 1px solid;
+            border-radius: 5px;
+            padding: 10px;
+            background: white;
+            box-shadow: -1px 4px 5px rgba(0, 0, 0, .2);
+            z-index: 10;
+
+            ul,
+            li {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
+        }
+
+        .items {
+            border: 1px solid;
+            border-radius: 4px;
+            padding: 5px;
+            display: inline-block;
+
+            .item {
+                display: flex;
+                gap: 10px;
+                margin: 5px 0;
+
+                &:not(:last-child) {
+                    border-bottom: 2px solid var(--pico-secondary-border);
+                }
+
+                p {
+                    flex-grow: 1;
+                    margin: 0;
+                }
+            }
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        @keyframes addTodo {
+            0% {
+                max-height: 0px;
+            }
+            100% {
+                max-height: 100px;
+            }
+        }
+        @keyframes deleteTodo {
+            0% {
+                max-height: 100px;
+            }
+            100% {
+                max-height: 0px;
+            }
+        }
+        li.item {
+            max-height: 0;
+            animation: addTodo 1s cubic-bezier(.4,2,.6,1) forwards;
+            overflow: hidden;
+
+            &.delete {
+                animation: deleteTodo 1s cubic-bezier(.4,2,.6,1) forwards;
+            }
+        }
+    </style>
+</head>
+
+<body class="container">
+    <header>
+        <hgroup>
+            <h1>Hi, this is reactiveHtml!</h1>
+            <p>The easiest way to make your html reactive.</p>
+            <p>Just try it out.</p>
+        </hgroup>
+    </header>
+    <hr>
+    <main>
+        <section>
+            <hgroup>
+                <h2>Reactive variable </h2>
+            </hgroup>
+            <p>Variables are written like {variablename}. In your javascript, at the store initialization,
+                just name it the same and it will get reactive, reflecting every change in the corresponding store
+                value.</p>
+                <br>
+            <div class="grid">
+                <input type="text" id="nameInput" placeholder="Enter name">
+                <input type="text" id="colorInput" placeholder="Enter color">
+                <input type="text" id="bgColorInput" placeholder="Enter background color">
+                <input type="text" id="testInput" placeholder="Enter nested var">
+            </div>
+
+            <h3 class="color-{color} bg-{bgColor}" title="{name}" data-test="{name}"
+                style="color: {color}; background-color: {bgColor};">Hello, the string of my name {name} is reactive and
+                is wrapped in an html i-tag!</h3>
+            <p>Also background color and text color are reactive. And this color string here "{nestedVar}" is even
+                a nested variable.</p>
+        </section>
+        <hr>
+        <section id="addnode">
+            <hgroup>
+                <h2>Manual dom changes</h2>
+            </hgroup>
+            <p>If you change the dom manually and you have variables in the added content,
+                you have to manually rescan the dom by calling reparse function.</p>
+            <button onclick="addANode()">Add a HTML node under this button</button>
+        </section>
+        <hr>
+        <section>
+            <hgroup>
+                <h3>For Direktive (Todo example)</h3>
+            </hgroup>
+            <p>Adding a todo will just add a node and not rerender the whole list.
+                Changed/added node will have red border.
+            </p>
+            <form id="todoform">
+                <fieldset role="group">
+                    <input type="text" name="todotext" id="todo" placeholder="todotext">
+                    <input type="submit" value="Add todo" />
+                </fieldset>
+            </form>
+            <div class="grid">
+                <ul class="items" rs-for="item in items">
+                    <li class="item" style="background: {item.bg}"  view-transition-name="todo-{index}">
+                        <p>{item.name} (idx: {index})</p><button>edit</button> <button onclick="deleteItem('{index}')">del</button>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <hr>
+        <section>
+            <hgroup>
+                <h3>If Direktive</h3>
+            </hgroup>
+            <div class="grid">
+                <button onclick="toggleShowElement()">toggleShowElement</button>
+                <p rs-if="showElement"><strong>Only visible if {showElement} is true.</strong></p>
+            </div>
+        </section>
+    </main>
+
+    <div class="debug">
+        <ul>
+            <li><b>name:</b> {name}</li>
+            <li><b>color:</b> <i>{color}</i></li>
+            <li><b>bgColor:</b> <i>{bgColor}</i></li>
+            <li><b>nestedVar:</b> <i>{nestedVar}</i></li>
+            <li><b>newNodeVariable:</b> <i>{newNodeVariable}</i></li>
+            <li><b>showElement:</b> <i>{showElement}</i></li>
+        </ul>
+    </div>
+
+    <script>
+        // Usage
+        const initialValues = {
+            name: '<i>Mike</i>',
+            color: 'var(--pico-color)',
+            bgColor: 'var(--pico-background-color)',
+            nestedVar: '{color}',
+            showElement: false,
+            items: [{ name: 'Banana', bg: 'transparent' }, { name: 'Ananas', bg: 'transparent' }],
+            items2: ['<li>alt</li>', '<li>alt</li>'],
+            newNodeVariable: 'new node'
+        };
+        const store = new ReactiveStore(initialValues); // The proxy is returned directly
+        const { rs } = store;
+
+        document.getElementById('nameInput')?.addEventListener('input', (event) => {
+            rs.name = event.target.value;
+        });
+        document.getElementById('colorInput')?.addEventListener('input', (event) => {
+            rs.color = event.target.value;
+        });
+        document.getElementById('bgColorInput')?.addEventListener('input', (event) => {
+            rs.bgColor = event.target.value;
+        });
+        document.getElementById('testInput')?.addEventListener('input', (event) => {
+            rs.nestedVar = event.target.value;
+        });
+        document.getElementById('todoform').addEventListener('submit', e => {
+            e.preventDefault();
+            addTodo();
+        })
+
+        function addANode() {
+            const paragraph = document.createElement('p');
+            paragraph.innerHTML = 'This is a {newNodeVariable}. My Name ist {name}';
+            document.getElementById('addnode').appendChild(paragraph);
+            // If you manually manipulate the dom, you have to call reinitStore() to let the library check newly added reactive statements
+            store.reparse(paragraph);
+        }
+
+        function toggleShowElement() {
+            rs.showElement = !rs.showElement;
+        }
+
+        function addTodo() {
+            rs.items = [...rs.items, { name: document.getElementById('todo').value, bg: 'transparent' }];
+        }
+
+        function deleteItem(idx) {
+            const itemToDelete = document.querySelector(`[rs-for-index="${idx}"]`);
+            // itemToDelete.classList.add('delete');
+            // setTimeout(() => {
+                rs.items = rs.items.filter((item, i) => i !== Number(idx));
+            // }, 1000)
+        }
+
+        store.on('change', (key, oldValue, newValue) => {
+            console.log(`${key} changed from ${oldValue} to ${newValue}`);
+        });
+    </script>
+</body>
+
+</html>
