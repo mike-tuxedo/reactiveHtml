@@ -215,8 +215,7 @@
             items2: ['<li>alt</li>', '<li>alt</li>'],
             newNodeVariable: 'new node'
         };
-        const store = new ReactiveStore(initialValues); // The proxy is returned directly
-        const { rs } = store;
+        const { store, rs } = new ReactiveStore(initialValues);
 
         document.getElementById('nameInput')?.addEventListener('input', (event) => {
             rs.name = event.target.value;

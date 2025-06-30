@@ -41,11 +41,10 @@ class ReactiveStore {
         this.scanDOM(document.body);
 
         // Return public API
-        // return {
-        //     rs: this.rs,
-        //     reparse: this.scanDOM.bind(this),
-        //     updateDomManually: this.scanDOM.bind(this)
-        // };
+        return {
+            store: this,
+            rs: this.rs
+        };
     }
 
     // Listener registrieren

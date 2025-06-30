@@ -22,14 +22,24 @@ Open `reactiveHtml.html` in your browser to see a live demo. Try adding todos, t
 <h2 class="color-{color}">Hello, {name}!</h2>
 <input id="nameInput">
 
+<button conclick="addNode()">Add some html node</button>
+<div id="newNodes"></div>
+
 <script>
   // initialize with default values
-  const store = new ReactiveStore({ name: 'Mike' });
+  const { store, rs } =  = new ReactiveStore({ name: 'Mike' });
 
-  const { rs } = store;
   document.getElementById('nameInput').addEventListener('input', e => {
     rs.name = e.target.value;
   });
+
+  function addNode() {
+    const paragraph = document.createElement('p');
+    paragraph.innerHTML = 'This is a new node with reactive value {name} in it.';
+    document.getElementById('newNodes').appendChild(paragraph);
+    // If you manually manipulate the dom, you have to call reparse(node). For performance reasons, the store doesn't track every dom change by default.
+    store.reparse(paragraph);
+  }
 </script>
 ```
 
