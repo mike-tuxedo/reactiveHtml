@@ -1,6 +1,6 @@
 # reactiveHtml
 
-A lightweight, zero-dependency library for making plain HTML reactive with minimal JavaScript. It enables template-style variable binding and reactive DOM updates, all with native browser features.
+A lightweight, zero-dependency library for making plain HTML reactive with minimal JavaScript. It enables template-style variable binding and reactive DOM updates, all with native browser features. And of course, it's opensoucre ;-)
 
 ## Features
 - Reactivity for variables in HTML: `{variable}` syntax
@@ -21,7 +21,12 @@ Open `reactiveHtml.html` in your browser to see a live demo. Try adding todos, t
 ```html
 <h2 class="color-{color}">Hello, {name}!</h2>
 <input id="nameInput">
+
 <script>
+  // initialize with default values
+  const store = new ReactiveStore({ name: 'Mike' });
+
+  const { rs } = store;
   document.getElementById('nameInput').addEventListener('input', e => {
     rs.name = e.target.value;
   });
