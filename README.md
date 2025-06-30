@@ -26,9 +26,10 @@ Open `reactiveHtml.html` in your browser to see a live demo. Try adding todos, t
 <div id="newNodes"></div>
 
 <script>
-  // initialize with default values
+  // initialize with default values. THATS ALL you have to do! :-)
   const { store, rs } =  = new ReactiveStore({ name: 'Mike' });
 
+  // The rest is your custom app code
   document.getElementById('nameInput').addEventListener('input', e => {
     rs.name = e.target.value;
   });
