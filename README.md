@@ -2,6 +2,8 @@
 
 A lightweight, zero-dependency library for making plain HTML reactive with minimal JavaScript. It enables template-style variable binding and reactive DOM updates, all with native browser features. And of course, it's opensoucre ;-)
 
+Preview https://mike-tuxedo.github.io/reactiveHtml/
+
 ## Features
 - Reactivity for variables in HTML: `{variable}` syntax
 - `rs-if` directive for conditional rendering
@@ -13,9 +15,8 @@ A lightweight, zero-dependency library for making plain HTML reactive with minim
 Open `reactiveHtml.html` in your browser to see a live demo. Try adding todos, toggling visibility, and editing variables to see reactivity in action.
 
 ## Usage
-1. Clone the repo or copy the `reactiveHtml` folder.
-2. Open `reactiveHtml.html` in your browser.
-3. Edit the HTML or JS to fit your needs.
+1. Include reactiveHtml.js into your page `<script src="reactiveHtml.js"></script>`.
+2. Edit your html or where ever you have your javascript and initiate a store, following the example below.
 
 ## Example
 ```html
