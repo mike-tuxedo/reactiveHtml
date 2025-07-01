@@ -22,7 +22,7 @@ Preview https://mike-tuxedo.github.io/reactiveHtml/
 
 ## Example
 ```html
-<h2 class="color-{color}">Hello, {name}!</h2>
+<h2 class="color-{color}" style="color: {color};">Hello, {name}!</h2>
 <input id="nameInput">
 
 <button conclick="addNode()">Add some html node</button>
@@ -41,7 +41,7 @@ Preview https://mike-tuxedo.github.io/reactiveHtml/
 
 <script>
   // Initialize with default values. THATS ALL you have to do! :-)
-  const { store, rs } =  = new ReactiveStore({ name: 'Mike', showElement: false, items: [{ name: 'Andi' }, { name: 'Tim' }] });
+  const { store, rs } =  = new ReactiveStore({ name: 'Mike', color: limegreen, showElement: false, items: [{ name: 'Andi' }, { name: 'Tim' }] });
 
   // =================================//
   // The rest is your custom app code //
