@@ -5,9 +5,6 @@ ReactiveHtml is not feature rich, it has just 3 keyfeatures that I think does mo
 
 In the future, I will add a basic app like example, but for now stick with the demo page respectively the example below.
 
-
-Preview https://mike-tuxedo.github.io/reactiveHtml/
-
 ## Features
 - Reactivity for variables in HTML: `{variable}` syntax
 - `rs-if` directive for conditional rendering
@@ -17,6 +14,7 @@ Preview https://mike-tuxedo.github.io/reactiveHtml/
 
 ## Demo
 Open `reactiveHtml.html` in your browser to see a live demo. Try adding todos, toggling visibility, and editing variables to see reactivity in action.
+Preview https://mike-tuxedo.github.io/reactiveHtml/
 
 ## Usage
 1. Include reactiveHtml.js into your page `<script src="reactiveHtml.js"></script>`.
