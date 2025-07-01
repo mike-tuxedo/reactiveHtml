@@ -1,6 +1,10 @@
 # reactiveHtml
 
-A lightweight, zero-dependency library for making plain HTML reactive with minimal JavaScript. It enables template-style variable binding and reactive DOM updates, all with native browser features. And of course, it's opensoucre ;-)
+A lightweight, zero-dependency, tiny javascript class for making plain HTML reactive. It enables template-style variable binding and reactive DOM updates, all with native browser features. And of course, it's opensoucre ;-)
+ReactiveHtml is not feature rich, it has just 3 keyfeatures that I think does most of the job (see Features). If you need a more features, you may be better of with alpinejs, sveltekit, or something like that. I like the kiss principle, so I kept it as simple as I can.
+
+In the future, I will add a basic app like example, but for now stick with the demo page respectively the example below.
+
 
 Preview https://mike-tuxedo.github.io/reactiveHtml/
 
@@ -26,10 +30,20 @@ Open `reactiveHtml.html` in your browser to see a live demo. Try adding todos, t
 <button conclick="addNode()">Add some html node</button>
 <div id="newNodes"></div>
 
+<!-- if directive -->
+<button onclick="toggleShowElement()">toggleShowElement</button>
+<p rs-if="showElement">Only visible if {showElement} is true.</p>
+
+<!-- for directive -->
+<ul class="items" rs-for="item in items">
+    <li class="item">
+        <p>{item.name} (idx: {index})</p>
+    </li>
+</ul>
+
 <script>
   // Initialize with default values. THATS ALL you have to do! :-)
-  const { store, rs } =  = new ReactiveStore({ name: 'Mike' });
-
+  const { store, rs } =  = new ReactiveStore({ name: 'Mike', showElement: false, items: [{ name: 'Andi' }, { name: 'Tim' }] });
 
   // =================================//
   // The rest is your custom app code //
@@ -38,11 +52,16 @@ Open `reactiveHtml.html` in your browser to see a live demo. Try adding todos, t
     rs.name = e.target.value;
   });
 
+  function toggleShowElement() {
+      rs.showElement = !rs.showElement;
+  }
+
   function addNode() {
     const paragraph = document.createElement('p');
     paragraph.innerHTML = 'This is a new node with reactive value {name} in it.';
     document.getElementById('newNodes').appendChild(paragraph);
-    // If you manually manipulate the dom, you have to call reparse(node). For performance reasons, the store doesn't track every dom change by default.
+    /* If you manually manipulate the dom, you have to call reparse(node). */
+    /* For performance reasons, the store doesn't track every dom change by default. */
     store.reparse(paragraph);
   }
 </script>
