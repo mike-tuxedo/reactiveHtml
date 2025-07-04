@@ -1,3 +1,6 @@
+!!! DISCLAIMER: This project is far from production ready, until now it has not been tested on a real world project !!!
+Just try it out and let me know what you think.
+
 # reactiveHtml
 
 A lightweight, zero-dependency, tiny javascript class for making plain HTML reactive. It enables template-style variable binding and reactive DOM updates, all with native browser features. And of course, it's opensoucre ;-)
