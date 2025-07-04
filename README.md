@@ -28,7 +28,7 @@ It enables template-style variable binding and lightning-fast DOM updates, all w
 ## 🎮 Live Demo
 
 Want to see it in action?  
-**1.** Open [`reactiveHtml.html`](./reactiveHtml.html) in your browser.  
+**1.** Clone or download the repo and open `reactiveHtml.html` in your browser.  
 **2.** Or try it live: [🌐 Live Preview](https://mike-tuxedo.github.io/reactiveHtml/)
 
 Add todos, toggle visibility, edit variables… watch the magic happen! ✨
@@ -46,6 +46,7 @@ Add todos, toggle visibility, edit variables… watch the magic happen! ✨
 
 ## 🧑‍💻 Example
 ```html
+<!-- reactive variables -->
 <h2 class="color-{color}" style="color: {color};">Hello, {name}!</h2>
 <input id="nameInput">
 
